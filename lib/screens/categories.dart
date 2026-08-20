@@ -16,11 +16,11 @@ class CategoriesScreen extends StatelessWidget {
           crossAxisSpacing: 20,
           mainAxisSpacing: 20,
         ),
-        children: 
-         [
-          for (final category in availableCategories) 
+        padding: EdgeInsets.all(20),
+        children: [
+          for (final category in availableCategories)
             CategoryGridItem(category: category),
-         ]
+        ],
       ),
     );
   }
