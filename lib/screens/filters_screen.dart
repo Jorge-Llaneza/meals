@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum Filters { glutenFree, lactoseFree, vegetarian, vegan }
+enum Filter { glutenFree, lactoseFree, vegetarian, vegan }
 
-class FiltersScreen extends StatefulWidget {
+class FiltersScreen extends ConsumerStatefulWidget {
   const FiltersScreen({super.key, required this.filters});
 
-  final Map<Filters, bool> filters;
+  final Map<Filter, bool> filters;
 
   @override
-  State<StatefulWidget> createState() {
+  ConsumerState<FiltersScreen> createState() {
     return _FiltersScreenState();
   }
 }
 
-class _FiltersScreenState extends State<FiltersScreen> {
+class _FiltersScreenState extends ConsumerState<FiltersScreen> {
   var _glutenFreeFilterSet = false;
   var _lactoseFreeFilterSet = false;
   var _vegetarianFilterSet = false;
@@ -22,10 +23,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
   @override
   void initState() {
     super.initState();
-    _glutenFreeFilterSet = widget.filters[Filters.glutenFree]!;
-    _lactoseFreeFilterSet = widget.filters[Filters.lactoseFree]!;
-    _vegetarianFilterSet = widget.filters[Filters.vegetarian]!;
-    _veganFilterSet = widget.filters[Filters.vegan]!;
+    _glutenFreeFilterSet = widget.filters[Filter.glutenFree]!;
+    _lactoseFreeFilterSet = widget.filters[Filter.lactoseFree]!;
+    _vegetarianFilterSet = widget.filters[Filter.vegetarian]!;
+    _veganFilterSet = widget.filters[Filter.vegan]!;
   }
 
   @override
@@ -37,10 +38,10 @@ class _FiltersScreenState extends State<FiltersScreen> {
         onPopInvokedWithResult: ((didPop, result) {
           if (didPop) return;
           Navigator.of(context).pop({
-            Filters.glutenFree: _glutenFreeFilterSet,
-            Filters.lactoseFree: _lactoseFreeFilterSet,
-            Filters.vegetarian: _vegetarianFilterSet,
-            Filters.vegan: _veganFilterSet,
+            Filter.glutenFree: _glutenFreeFilterSet,
+            Filter.lactoseFree: _lactoseFreeFilterSet,
+            Filter.vegetarian: _vegetarianFilterSet,
+            Filter.vegan: _veganFilterSet,
           });
         }),
         child: Column(
