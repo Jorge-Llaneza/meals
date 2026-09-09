@@ -13,6 +13,10 @@ class FiltersNotifier extends StateNotifier<Map<Filter, bool>> {
   void setFilter(Filter filter, bool isActive) {
     state = {...state, filter: isActive};
   }
+
+  void setFilters(Map<Filter, bool> filters) {
+    state = filters;
+  }
 }
 
 final filtersProvider =
