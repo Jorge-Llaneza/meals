@@ -23,15 +23,17 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 400),
+      duration: const Duration(milliseconds: 250),
       lowerBound: 0,
       upperBound: 1,
     );
+
+    _animationController.forward();
   }
 
   @override
   void dispose() {
-    // TODO: implement dispose
+    _animationController.dispose();
     super.dispose();
   }
 
@@ -51,24 +53,33 @@ class _CategoriesScreenState extends State<CategoriesScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: GridView(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          childAspectRatio: 3 / 2,
-          crossAxisSpacing: 20,
-          mainAxisSpacing: 20,
+    return AnimatedBuilder(
+      animation: _animationController,
+      child: Scaffold(
+        body: GridView(
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            childAspectRatio: 3 / 2,
+            crossAxisSpacing: 20,
+            mainAxisSpacing: 20,
+          ),
+          padding: EdgeInsets.all(20),
+          children: [
+            for (final category in availableCategories)
+              CategoryGridItem(
+                category: category,
+                onselectCategory: () {
+                  _selectCategory(context, category);
+                },
+              ),
+          ],
         ),
-        padding: EdgeInsets.all(20),
-        children: [
-          for (final category in availableCategories)
-            CategoryGridItem(
-              category: category,
-              onselectCategory: () {
-                _selectCategory(context, category);
-              },
-            ),
-        ],
+      ),
+      builder: (context, child) => Padding(
+        padding: EdgeInsetsGeometry.only(
+          top: 700 - _animationController.value * 700,
+        ),
+        child: child,
       ),
     );
   }
